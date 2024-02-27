@@ -4,6 +4,6 @@ This project is to learn the fundamentals of OpenGL and graphics programming. Th
 
 ```
 [] Render simple shapes (spheres, cubes)
-[] Single color shading
-[] Output to Window
+[X] Single color shading
+[X] Output to Window
 ```
