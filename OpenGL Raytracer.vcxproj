@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glad\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glm;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\kenny\source\repos\OpenGL Raytracer\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glad\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glm;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glad\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glm;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\kenny\source\repos\OpenGL Raytracer\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glad\include;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glm;C:\Users\kenny\Documents\Visual Studio 2022\Libraries\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -137,6 +137,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Documents\Visual Studio 2022\Libraries\glad\src\gl.c" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
