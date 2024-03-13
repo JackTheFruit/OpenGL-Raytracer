@@ -1,6 +1,6 @@
 # OpenGL Raytracer
 
-This project is to learn the fundamentals of OpenGL and graphics programming. The following objectives will be completed by the end of this week.
+This project is to learn the fundamentals of OpenGL and graphics programming. The following are the tasks to be completed.
 
 ```
 [x] Render simple shapes (spheres, cubes)
