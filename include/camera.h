@@ -27,6 +27,7 @@ public:
 	void updateCameraFront();
 	glm::mat4 makeView();
 	glm::mat4 makePerspective(int width, int height, float near, float far);
+	glm::vec3 getCameraPos();
 };
 
 Camera::Camera() {
@@ -109,5 +110,9 @@ void Camera::processCameraInput(GLFWwindow* window, float deltaTime) {
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+}
+
+glm::vec3 Camera::getCameraPos() {
+	return cameraPos;
 }
 #endif

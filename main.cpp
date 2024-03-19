@@ -11,30 +11,72 @@
 
 #include <iostream>
 
+//float vertices[] = {
+//	-0.5f, -0.5f,  0.5f,
+//	-0.5f,  0.5f,  0.5f,
+//	0.5f,  0.5f,  0.5f,
+//	0.5f, -0.5f,  0.5f,
+//	-0.5f, -0.5f, -0.5f,
+//	-0.5f,  0.5f, -0.5f,
+//	0.5f,  0.5f, -0.5f,
+//	0.5f, -0.5f, -0.5f
+//};
+//unsigned int indices[] = { 
+//	1,0,3,
+//	1,3,2,
+//	2,3,7,
+//	2,7,6,
+//	3,0,4,
+//	3,4,7,
+//	6,5,1,
+//	6,1,2,
+//	4,5,6,
+//	4,6,7,
+//	5,4,0,
+//	5,0,1
+//};
+
 float vertices[] = {
-	-0.5f, -0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f
+	// positions // normals // texture coords
+	-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+	0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+	0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+	-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+	-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+	0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+	0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+	-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+	-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+	-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+	-0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+	-0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+	-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+	0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+	0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+	0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+	0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+	0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+	-0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+	-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+	0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+	0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+	0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+	-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+	-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
 };
-unsigned int indices[] = { 
-	1,0,3,
-	1,3,2,
-	2,3,7,
-	2,7,6,
-	3,0,4,
-	3,4,7,
-	6,5,1,
-	6,1,2,
-	4,5,6,
-	4,6,7,
-	5,4,0,
-	5,0,1
-};
+
+glm::vec3 lightPos(1.2f, 5.0f, 2.0f);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -42,6 +84,22 @@ float lastFrame = 0.0f; // Time of last frame
 int windowWidth = 800, windowHeight = 600;
 
 Camera camera;
+
+//void calcNormals() {
+//	float normals[36];
+//	for (int i = 0; i < 12; i++) {
+//		int vert_A_idx = indices[3 * i];
+//		int vert_B_idx = indices[3 * i + 1];
+//		int vert_C_idx = indices[3 * i + 2];
+//		glm::vec3 vecA = glm::vec3(vertices[3 * vert_A_idx], vertices[3 * vert_A_idx + 1], vertices[3 * vert_A_idx + 2]);
+//		glm::vec3 vecB = glm::vec3(vertices[3 * vert_B_idx], vertices[3 * vert_B_idx + 1], vertices[3 * vert_B_idx + 2]);
+//		glm::vec3 vecC = glm::vec3(vertices[3 * vert_C_idx], vertices[3 * vert_C_idx + 1], vertices[3 * vert_C_idx + 2]);
+//		glm::vec3 normal = glm::normalize(glm::cross((vecB - vecA), (vecC - vecB)));
+//		normals[3 * i] = normal.x;
+//		normals[3 * i + 1] = normal.y;
+//		normals[3 * i + 2] = normal.z;
+//	}
+//}
 
 void processInput(GLFWwindow* window)
 {
@@ -95,13 +153,15 @@ int main()
 	glfwSetScrollCallback(window, scroll_callback);
 
 	Shader ourShader("./shaders/shader.vert", "./shaders/shader.frag");
+	Shader lightShader("./shaders/shader.vert", "./shaders/light.frag");
 
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
-	unsigned int VAO;
+	unsigned int VAO, lightVAO;
 	glGenVertexArrays(1, &VAO);
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);
+	glGenVertexArrays(1, &lightVAO);
+	/*unsigned int EBO;
+	glGenBuffers(1, &EBO);*/
 
 	// ..:: Initialization code :: ..
 	// 1. bind Vertex Array Object
@@ -109,25 +169,18 @@ int main()
 	// 2. copy our vertices array in a vertex buffer for OpenGL to use
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	// 3. copy our index array in a element buffer for OpenGL to use
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,GL_STATIC_DRAW);
-	// 4. then set the vertex attributes pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),(void*)0);
+	// 3. then set the vertex attributes pointers
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),(void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(2.0f, 5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f, 3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f, 2.0f, -2.5f),
-		glm::vec3(1.5f, 0.2f, -1.5f),
-		glm::vec3(-1.3f, 1.0f, -1.5f)
-	};
+	glBindVertexArray(lightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -135,26 +188,40 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		processInput(window);
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
+		glm::mat4 view = camera.makeView();
+		glm::mat4 perspective = camera.makePerspective(windowWidth, windowHeight, 0.1f, 100.0f);
+
 		ourShader.use();
 
+		ourShader.setVec3("viewPos", camera.getCameraPos());
+		ourShader.setVec3("lightPos", lightPos);
+		ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-		ourShader.setMat4("view", camera.makeView());
-		ourShader.setMat4("projection", camera.makePerspective(windowWidth, windowHeight, 0.1f, 100.0f));
+		ourShader.setMat4("view", view);
+		ourShader.setMat4("projection", perspective);
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		ourShader.setMat4("model", model);
 		
 		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			ourShader.setMat4("model", model);
-			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-		}
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
+		lightShader.use();
+		ourShader.setMat4("view", view);
+		ourShader.setMat4("projection", perspective);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, lightPos);
+		ourShader.setMat4("model", model);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);

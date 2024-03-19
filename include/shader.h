@@ -21,6 +21,8 @@ public:
 	void setFloat(const std::string& name, float value) const;
 	void setFloat4(const std::string& name, float x, float y, float z, float w) const;
 	void setMat4(const std::string& name, glm::mat4) const;
+	void setVec3(const std::string& name, float x, float y, float z);
+	void setVec3(const std::string& name, glm::vec3);
 };
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
@@ -129,5 +131,15 @@ void Shader::setFloat4(const std::string& name, float x, float y, float z, float
 void Shader::setMat4(const std::string& name, glm::mat4 value) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::setVec3(const std::string& name, float x, float y, float z)
+{
+	glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
+}
+
+void Shader::setVec3(const std::string& name, glm::vec3 vectorData)
+{
+	glUniform3f(glGetUniformLocation(ID, name.c_str()), vectorData.x, vectorData.y, vectorData.z);
 }
 #endif
