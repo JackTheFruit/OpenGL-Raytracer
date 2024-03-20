@@ -7,5 +7,5 @@ This project is to learn the fundamentals of OpenGL and graphics programming. Th
 [X] Single color shading
 [X] Output to Window
 [X] Simple Phong Shading
-[ ] Materials 
+[X] Materials 
 ```
