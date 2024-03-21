@@ -28,6 +28,7 @@ public:
 	glm::mat4 makeView();
 	glm::mat4 makePerspective(int width, int height, float near, float far);
 	glm::vec3 getCameraPos();
+	glm::vec3 getCameraFront();
 };
 
 Camera::Camera() {
@@ -110,9 +111,17 @@ void Camera::processCameraInput(GLFWwindow* window, float deltaTime) {
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraUp;
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraUp;
 }
 
 glm::vec3 Camera::getCameraPos() {
 	return cameraPos;
+}
+
+glm::vec3 Camera::getCameraFront() {
+	return cameraFront;
 }
 #endif

@@ -40,5 +40,8 @@
     <None Include="shaders\light.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="shaders\light.vert">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
