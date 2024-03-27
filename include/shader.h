@@ -6,6 +6,12 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+#include <glm/glm.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 class Shader
 {
 public:

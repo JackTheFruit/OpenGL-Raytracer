@@ -29,6 +29,12 @@
     <ClInclude Include="include\camera.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\mesh.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\model.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag">
