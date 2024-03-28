@@ -58,6 +58,29 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 	camera.scrollCallback(window, xoffset, yoffset);
 }
 
+void drawTwoCubes(Model cubeModel, Shader shader, bool scaleFlag) {
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(5.0f, 1.0f, 3.0f));
+	if(scaleFlag)
+		model = glm::scale(model, glm::vec3(1.1f, 1.1f, 1.1f));
+	shader.setMat4("model", model);
+	cubeModel.Draw(shader);
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(-2.0f, 1.0f, -1.0f));
+	if (scaleFlag)
+		model = glm::scale(model, glm::vec3(1.1f, 1.1f, 1.1f));
+	shader.setMat4("model", model);
+	cubeModel.Draw(shader);
+}
+
+void drawFloor(Model planeModel, Shader shader) {
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+	shader.setMat4("model", model);
+	planeModel.Draw(shader);
+}
+
 int main()
 {
 	glfwInit();
@@ -94,11 +117,19 @@ int main()
 	stbi_set_flip_vertically_on_load(true);
 
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	Shader ourShader("./shaders/shader.vert", "./shaders/shader.frag");
+	Shader normalShader("./shaders/shader.vert", "./shaders/shader.frag");
+	Shader solidShader("./shaders/shader.vert", "./shaders/solid.frag");
 	
-	std::filesystem::path model_path = std::filesystem::current_path() / "models" / "backpack" / "backpack.obj";
-	Model ourModel(model_path.string());
+	std::filesystem::path model_path = std::filesystem::current_path() / "models" / "cube" / "cube.obj";
+	Model cubeModel(model_path.string());
+
+	model_path = std::filesystem::current_path() / "models" / "plane" / "plane.obj";
+	Model planeModel(model_path.string());
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -106,26 +137,39 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		processInput(window);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		glm::mat4 view = camera.makeView();
 		glm::mat4 perspective = camera.makePerspective(windowWidth, windowHeight, 0.1f, 100.0f);
 
-		ourShader.use();
+		normalShader.use();
+		normalShader.setVec3("viewPos", camera.getCameraPos());
+		normalShader.setMat4("projection", perspective);
+		normalShader.setMat4("view", view);
 
-		ourShader.setVec3("viewPos", camera.getCameraPos());
+		solidShader.use();
+		solidShader.setVec3("viewPos", camera.getCameraPos());
+		solidShader.setMat4("projection", perspective);
+		solidShader.setMat4("view", view);
 
-		// view/projection transformations
-		ourShader.setMat4("projection", perspective);
-		ourShader.setMat4("view", view);
+		normalShader.use();
+		glStencilMask(0x00); // don’t update stencil buffer while drawing the floor
+		drawFloor(planeModel, normalShader);
 
-		// render the loaded model
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		ourShader.setMat4("model", model);
-		ourModel.Draw(ourShader);
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glStencilMask(0xFF);
+		drawTwoCubes(cubeModel, normalShader, false);
+
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		glStencilMask(0x00);
+		glDisable(GL_DEPTH_TEST);
+		solidShader.use();
+		drawTwoCubes(cubeModel, solidShader, true);
+		glStencilMask(0xFF);
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glEnable(GL_DEPTH_TEST);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
