@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+#include <glm/gtx/norm.hpp>
 #include <shader.h>
 #include <camera.h>
 #include <model.h>
@@ -14,6 +15,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include <map>
 
 glm::vec3 lightPos(1.2f, -1.0f, 4.0f);
 
@@ -81,6 +83,17 @@ void drawFloor(Model planeModel, Shader shader) {
 	planeModel.Draw(shader);
 }
 
+void drawWindows(Model windowModel, Shader shader, std::map<float, glm::vec3> sorted) {
+	for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+	{
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, it->second);
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		windowModel.Draw(shader);
+	}
+}
+
 int main()
 {
 	glfwInit();
@@ -117,19 +130,29 @@ int main()
 	stbi_set_flip_vertically_on_load(true);
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	glEnable(GL_STENCIL_TEST);
-	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	//glDepthFunc(GL_LESS);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Shader normalShader("./shaders/shader.vert", "./shaders/shader.frag");
-	Shader solidShader("./shaders/shader.vert", "./shaders/solid.frag");
 	
 	std::filesystem::path model_path = std::filesystem::current_path() / "models" / "cube" / "cube.obj";
 	Model cubeModel(model_path.string());
 
 	model_path = std::filesystem::current_path() / "models" / "plane" / "plane.obj";
 	Model planeModel(model_path.string());
+
+	model_path = std::filesystem::current_path() / "models" / "window" / "window.obj";
+	Model windowModel(model_path.string());
+
+	std::vector<glm::vec3> windows
+	{
+		glm::vec3(-1.5f, 1.0f, -0.48f),
+		glm::vec3(1.5f, 1.0f, 0.51f),
+		glm::vec3(0.0f, 1.0f, 0.7f),
+		glm::vec3(-0.3f, 1.0f, -2.3f),
+		glm::vec3(0.5f, 1.0f, -0.6f)
+	};
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -138,8 +161,15 @@ int main()
 		lastFrame = currentFrame;
 		processInput(window);
 
+		std::map<float, glm::vec3> sorted;
+		for (unsigned int i = 0; i < windows.size(); i++)
+		{
+			float distance = glm::length2(camera.getCameraPos() - windows[i]);
+			sorted[distance] = windows[i];
+		}
+
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 view = camera.makeView();
 		glm::mat4 perspective = camera.makePerspective(windowWidth, windowHeight, 0.1f, 100.0f);
@@ -148,28 +178,10 @@ int main()
 		normalShader.setVec3("viewPos", camera.getCameraPos());
 		normalShader.setMat4("projection", perspective);
 		normalShader.setMat4("view", view);
-
-		solidShader.use();
-		solidShader.setVec3("viewPos", camera.getCameraPos());
-		solidShader.setMat4("projection", perspective);
-		solidShader.setMat4("view", view);
-
-		normalShader.use();
-		glStencilMask(0x00); // don’t update stencil buffer while drawing the floor
+		
 		drawFloor(planeModel, normalShader);
-
-		glStencilFunc(GL_ALWAYS, 1, 0xFF);
-		glStencilMask(0xFF);
 		drawTwoCubes(cubeModel, normalShader, false);
-
-		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-		glStencilMask(0x00);
-		glDisable(GL_DEPTH_TEST);
-		solidShader.use();
-		drawTwoCubes(cubeModel, solidShader, true);
-		glStencilMask(0xFF);
-		glStencilFunc(GL_ALWAYS, 1, 0xFF);
-		glEnable(GL_DEPTH_TEST);
+		drawWindows(windowModel, normalShader, sorted);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

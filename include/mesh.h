@@ -31,6 +31,7 @@ public:
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,std::vector<Texture> textures);
+	//~Mesh();
 	void Draw(Shader& shader);
 private:
 	// render data
@@ -44,6 +45,13 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
 	this->textures = textures;
 	setupMesh();
 }
+
+//Mesh::~Mesh() {
+//	std::cout << "Mesh destroyed!" << std::endl;
+//	glDeleteVertexArrays(1, &VAO);
+//	glDeleteBuffers(1, &VBO);
+//	glDeleteBuffers(1, &EBO);
+//}
 
 void Mesh::setupMesh()
 {
