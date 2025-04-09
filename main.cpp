@@ -25,7 +25,7 @@ float lastFrame = 0.0f; // Time of last frame
 int windowWidth = 800, windowHeight = 600;
 
 Camera camera;
-
+//Test change
 //void calcNormals() {
 //	float normals[36];
 //	for (int i = 0; i < 12; i++) {
